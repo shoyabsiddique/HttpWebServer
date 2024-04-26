@@ -1,0 +1,169 @@
+<!doctype html>
+<html>
+
+<head>
+  <title>Psychological Profiling</title>
+  <style>
+    body {
+      background-color: #f2f2f2;
+      /* Light gray background */
+      font-family: Arial, sans-serif;
+      /* Default font family */
+      text-align: center;
+      /* Center align content */
+    }
+
+    h1,
+    p {
+      font-weight: bold;
+      /* Make headings and paragraphs bold */
+    }
+
+    button {
+      padding: 10px 20px;
+      /* Add padding to button */
+      font-size: 16px;
+      /* Increase font size of button */
+      background-color: #007bff;
+      /* Blue button background */
+      color: #fff;
+      /* White button text */
+      border: none;
+      /* Remove button border */
+      border-radius: 5px;
+      /* Add button border radius */
+      cursor: pointer;
+      /* Change cursor to pointer on hover */
+    }
+
+    button:hover {
+      background-color: #0056b3;
+      /* Darker blue on hover */
+    }
+  </style>
+</head>
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Psychological Profiling</title>
+</head>
+
+<body>
+
+  <h1>Psychological Profiling</h1>
+
+  <p>Welcome to your psychological profile</p>
+
+  <!-- Button to fetch and display input data -->
+  <button onclick="fetchInputData()">Show Input Data</button>
+
+  <!-- Button to fetch and display psychological profile -->
+  <button onclick="fetchProfileData()">Show Psychological Profile</button>
+
+  <button onclick="window.location.href='/form'">Take the Test</button>
+
+  <!-- Display input data -->
+  <div id="inputData"></div>
+
+  <!-- Display psychological profile -->
+  <div id="profileData"></div>
+
+  <script>
+    function fetchInputData() {
+      fetch('/view/input')
+        .then(response => response.json())
+        .then(data => displayInputData(data))
+        .catch(error => console.error('Error fetching input data:', error));
+    }
+
+    function displayInputData(data) {
+      let inputDataHTML = '<h2>Input Data</h2>';
+      inputDataHTML += '<p><strong>Name:</strong> ' + data.name + '</p>';
+      inputDataHTML += '<p><strong>Gender:</strong> ' + data.gender + '</p>';
+      inputDataHTML += '<p><strong>Birth Year:</strong> ' + data.birthyear + '</p>';
+      inputDataHTML += '<p><strong>Birth Place:</strong> ' + data.birthplace + '</p>';
+      inputDataHTML += '<p><strong>Residence:</strong> ' + data.residence + '</p>';
+      inputDataHTML += '<p><strong>Job:</strong> ' + data.job + '</p>';
+
+      inputDataHTML += '<p><strong>Pets:</strong></p>';
+
+      // Iterate over each pet and add an image tag
+      data.pets.forEach(pet => {
+        inputDataHTML += '<img src="' + pet + '" alt="' + pet + '" style="width: 100px; height: auto; margin-right: 10px;">';
+      });
+      inputDataHTML += '<p><strong>Message:</strong> ' + data.message + '</p>';
+      document.getElementById('inputData').innerHTML = inputDataHTML;
+    }
+
+
+
+    function fetchProfileData() {
+      fetch('/view/profile')
+        .then(response => response.json())
+        .then(data => displayProfileData(data))
+        .catch(error => console.error('Error fetching profile data:', error));
+    }
+
+    function movieDetails(movieName) {
+      const url = "https://www.omdbapi.com/?apikey=5ebcfe6&t=" + movieName;
+
+      fetch(url)
+        .then(response => response.json())
+        .then(data => {
+          // Extract relevant movie details
+          const title = data.Title;
+          const runtime = data.Runtime;
+          const year = data.Year;
+          const genre = data.Genre;
+          const plot = data.Plot;
+          const language = data.Language;
+          const poster = data.Poster;
+
+          // Render HTML details
+          const movieDetailsHTML = `
+                  <div style="border: 1px solid black; padding: 30px;">
+                      <h1> Movie Recommendation </h1>
+                      <h3>${title}</h3>
+                      <p><strong>Runtime:</strong> ${runtime}</p>
+                      <p><strong>Year:</strong> ${year}</p>
+                      <p><strong>Genre:</strong> ${genre}</p>
+                      <p><strong>Plot:</strong> ${plot}</p>
+                      <p><strong>Language:</strong> ${language}</p>
+                      <img src="${poster}" alt="${title} Poster" style="width: 200px;">
+                  </div>
+              `;
+
+          // Render the details in a specific element
+          document.getElementById('movieDetails').innerHTML = movieDetailsHTML;
+        })
+        .catch(error => {
+          console.error('Error fetching movie details:', error);
+        });
+    }
+
+
+    function displayProfileData(data) {
+      let profileDataHTML = '<h2>Psychological Profile</h2>';
+      profileDataHTML += '<p><strong>Career Susceptibility:</strong> ' + data.career_susceptibility + '</p>';
+      // Append movie details div
+      profileDataHTML += '<div id="movieDetails"></div>';
+
+      // Render profile data
+      document.getElementById('profileData').innerHTML = profileDataHTML;
+
+      // Fetch and display movie details
+      movieDetails(data.movie_recommendation);
+    }
+
+  </script>
+
+</body>
+
+</html>
+
+
+</html>

@@ -1,0 +1,174 @@
+<!doctype html>
+<html>
+
+<head>
+  <title>Personality Test</title>
+  <style>
+    body {
+      background-color: #f2f2f2; /* Light gray background */
+      font-family: Arial, sans-serif; /* Default font family */
+      text-align: center; /* Center align content */
+    }
+
+    h1 {
+      font-weight: bold; /* Make headings bold */
+      color: #333; /* Dark gray text */
+    }
+
+    form {
+      margin: 0 auto; /* Center the form horizontally */
+      max-width: 600px; /* Set maximum width for the form */
+      background-color: #fff; /* White background for form */
+      padding: 20px; /* Add padding inside the form */
+      border-radius: 10px; /* Add rounded corners */
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add shadow effect */
+    }
+
+    label {
+      display: block; /* Display labels in block format */
+      font-weight: bold; /* Make labels bold */
+      margin-bottom: 10px; /* Add bottom margin to labels */
+    }
+
+    input[type="text"],
+    select,
+    textarea {
+      width: 100%; /* Set input fields width to 100% */
+      padding: 10px; /* Add padding to input fields */
+      margin-bottom: 20px; /* Add bottom margin to input fields */
+      border: 1px solid #ccc; /* Add border to input fields */
+      border-radius: 5px; /* Add border radius to input fields */
+      box-sizing: border-box; /* Include padding and border in element's total width and height */
+    }
+
+    input[type="radio"] {
+      display: inline-block; /* or inline */
+      margin-right: 10px; /* Add some spacing between radio buttons */
+      margin-bottom: 10px;
+    }
+
+    input[type="submit"],
+    input[type="reset"] {
+      background-color: #007bff; /* Blue button background */
+      color: #fff; /* White button text */
+      border: none; /* Remove button border */
+      border-radius: 5px; /* Add button border radius */
+      padding: 10px 20px; /* Add padding to button */
+      font-size: 16px; /* Increase font size of button */
+      cursor: pointer; /* Change cursor to pointer on hover */
+      margin-right: 10px; /* Add right margin to buttons */
+    }
+
+    input[type="submit"]:hover,
+    input[type="reset"]:hover {
+      background-color: #0056b3; /* Darker blue on hover */
+    }
+
+    select {
+      margin-bottom: 20px; /* Add bottom margin to select */
+    }
+
+    textarea {
+      resize: vertical; /* Allow vertical resizing of textarea */
+    }
+
+    hr {
+      border: none; /* Remove default hr border */
+      border-top: 1px solid #ccc; /* Add custom hr border */
+      margin: 20px 0; /* Add margin around hr */
+    }
+
+  </style>
+</head>
+
+<body>
+  <h1>Online Personality Test</h1>
+
+  <!-- Set the appropriate action -->
+  <form method="post" action="/analysis">
+
+    <label>Input your name</label>
+    <input type="text" name="name">
+
+    <label>What is your gender?</label>
+    <input type="radio" name="gender" value="M">Male
+    <input type="radio" name="gender" value="F">Female
+
+    <label>In what year were you born?</label>
+    <input type="text" name="birthyear">
+
+    <label>What is the country of your birth?</label>
+    <input type="text" name="birthplace">
+
+    <label>What country do you live in now?</label>
+    <input type="text" name="residence">
+
+    <hr>
+
+    <h3>I see myself as someone who...</h3>
+    <!-- This piece of JavaScript generates a series of questions each with radio
+         button responses. All responses at the server side will be collected
+         into an array called "question" -->
+    <ol>
+      <script>
+
+        function putquestion(txt, qno) {
+          document.write("<li><b> ... " + txt + "</b><br>")
+          document.write("Disagree")
+          document.write("&nbsp <input type=radio name=question[" + qno + "] value=1 checked>1")
+          for (i = 2; i <= 5; i++) {
+            document.write("&nbsp <input type=radio name=question[" + qno + "] value=" + i + ">" + i)
+          }
+          document.write("&nbsp Agree")
+        }
+        putquestion("is talkative", 1)
+        putquestion("does a thorough job", 2)
+        putquestion("is original, comes up with new ideas", 3)
+        putquestion("is helpful, unselfish with others", 4)
+        putquestion("can be somewhat careless", 5)
+        putquestion("is relaxed, handles stress well", 6)
+        putquestion("is curious about many things", 7)
+        putquestion("is full of energy", 8)
+        putquestion("starts quarrels with others", 9)
+        putquestion("is a reliable worker", 10)
+        putquestion("is a deep thinker", 11)
+        putquestion("tends to be disorganized", 12)
+        putquestion("worries a lot", 13)
+        putquestion("tends to be quiet", 14)
+        putquestion("tends to be lazy", 15)
+        putquestion("sometimes shy", 16)
+        putquestion("is sometimes rude to others", 17)
+        putquestion("tends to find fault with others", 18)
+        putquestion("gets nervous easily", 19)
+        putquestion("likes to work in a team", 20)
+      </script>
+    </ol>
+
+    <hr>
+
+    <label>Which of these jobs would be most appealing to you?</label>
+    <select name="job">
+      <option value="ceo">CEO of large mega-corporation</option>
+      <option value="astronaut">Astronaut</option>
+      <option value="doctor">Medical doctor</option>
+      <option value="model">Fashion model</option>
+      <option value="rockstar">Rock star</option>
+      <option value="garbage">Refuse collection operative</option>
+    </select>
+
+    <hr>
+
+    <label>Which of these animals would appeal to you as a pet?</label><br />
+    <input type="checkbox" name="pets" value="dog">Dog
+    <input type="checkbox" name="pets" value="cat">Cat
+    <input type="checkbox" name="pets" value="duck">Duck
+
+    <hr>
+
+    <label>Enter a message or comment if you have one.</label><br />
+    <textarea name="message" cols="60" rows="6"></textarea>
+    <br /><br />
+
+    <!-- Set the appropriate action -->
+    <input type="submit" name="submit" value="Submit">
+    <input type="reset" name="reset"
